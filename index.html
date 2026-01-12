@@ -8,36 +8,52 @@
     <!-- Prevent this page from being indexed by search engines -->
     <meta name="robots" content="noindex,nofollow" />
 
-    <!-- HTML meta refresh as a fallback (immediate) -->
-    <meta http-equiv="refresh" content="0; url=https://discord.gg/9c8sqkWk" />
+    <!-- Meta refresh fallback (small delay to make behavior easier to debug) -->
+    <meta http-equiv="refresh" content="1; url=https://discord.gg/9c8sqkWk" />
 
     <link rel="canonical" href="https://discord.gg/9c8sqkWk" />
     <style>
-      /* Minimal styling to make the fallback readable */
       html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
       .center{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;text-align:center}
       a{color:#0366d6}
     </style>
 
     <script>
-      // Use replace so the redirect doesn't remain in the browser history
       (function () {
         var target = "https://discord.gg/9c8sqkWk";
-        try {
-          // replace is preferred (no back-button entry)
-          window.location.replace(target);
-        } catch (e) {
-          // fallback
-          window.location.href = target;
+        // Helpful debug output — remove in production if you like
+        console.debug("[redirect] target:", target, "location:", window.location.href);
+
+        // Try to redirect after the page has loaded to avoid timing edge-cases
+        function doRedirect() {
+          try {
+            // replace avoids leaving this page in history
+            window.location.replace(target);
+            console.debug("[redirect] window.location.replace called");
+          } catch (e) {
+            console.warn("[redirect] replace failed, falling back to href", e);
+            try { window.location.href = target; } catch (e2) { console.error("[redirect] href failed", e2); }
+          }
+        }
+
+        // Use load event with a tiny timeout to help in restrictive environments
+        if (document.readyState === "complete") {
+          setTimeout(doRedirect, 50);
+        } else {
+          window.addEventListener("load", function () { setTimeout(doRedirect, 50); }, { once: true });
         }
       })();
     </script>
+    <noscript>
+      <!-- If JS is disabled, the meta-refresh above (1s) will still fire; provide a manual fallback -->
+      <meta http-equiv="refresh" content="1; url=https://discord.gg/9c8sqkWk" />
+    </noscript>
   </head>
   <body>
     <div class="center" role="main">
       <h1>Redirecting…</h1>
       <p>If you are not redirected automatically, <a href="https://discord.gg/9c8sqkWk" rel="noopener noreferrer">click here to open the Discord invite</a>.</p>
-      <p><small>If you intentionally want a page indexed by search engines, remove the <code>&lt;meta name="robots" content="noindex,nofollow"&gt;</code> tag.</small></p>
+      <p><small>Open the browser console (DevTools) and check for messages starting with “[redirect]” if the redirect still fails.</small></p>
     </div>
   </body>
 </html>
