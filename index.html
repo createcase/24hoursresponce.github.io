@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Redirecting...</title>
+
+    <!-- Prevent this page from being indexed by search engines -->
+    <meta name="robots" content="noindex,nofollow" />
+
+    <!-- HTML meta refresh as a fallback (immediate) -->
+    <meta http-equiv="refresh" content="0; url=https://discord.gg/9c8sqkWk" />
+
+    <link rel="canonical" href="https://discord.gg/9c8sqkWk" />
+    <style>
+      /* Minimal styling to make the fallback readable */
+      html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+      .center{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;text-align:center}
+      a{color:#0366d6}
+    </style>
+
+    <script>
+      // Use replace so the redirect doesn't remain in the browser history
+      (function () {
+        var target = "https://discord.gg/9c8sqkWk";
+        try {
+          // replace is preferred (no back-button entry)
+          window.location.replace(target);
+        } catch (e) {
+          // fallback
+          window.location.href = target;
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="center" role="main">
+      <h1>Redirecting…</h1>
+      <p>If you are not redirected automatically, <a href="https://discord.gg/9c8sqkWk" rel="noopener noreferrer">click here to open the Discord invite</a>.</p>
+      <p><small>If you intentionally want a page indexed by search engines, remove the <code>&lt;meta name="robots" content="noindex,nofollow"&gt;</code> tag.</small></p>
+    </div>
+  </body>
+</html>
